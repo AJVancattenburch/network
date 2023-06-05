@@ -1,22 +1,23 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 py-5 me-5">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center col-12 mx-5">
+  <nav class="navbar navbar-expand-text-center lg navbar-dark bg-dark px-3 pb-5 me-5">
+    <router-link class="col-4 navbar-brand d-flex" :to="{ name: 'Home' }">
+      <div class="d-flex align-items-center col-12 mx-5">
         <img alt="logo" src="https://i.ibb.co/4YnzxyH/Logo.png" height="45" />
       </div>
+    </router-link>
+    <router-link :to="{ name: 'Account' }" role="button" class="col-4 text-success text-uppercase">
+      <i class="mdi mdi-account fs-3 mb-3"></i>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <div class="navbar-nav col-6 offset-5">
-          <router-link :to="{ name: 'Account' }" class="btn text-success lighten-30 selectable text-uppercase">
-            <i class="mdi mdi-account fs-3"></i>
-            <span class="fs-6">Account</span>
-          </router-link>
+      <div class="navbar-nav">
+        
       </div>
       <!-- LOGIN COMPONENT HERE -->
+      <div class="col-4"></div>
       <Login />
     </div>
   </nav>
@@ -32,11 +33,7 @@ export default {
 }
 </script>
 
-<style scoped>
-a:hover {
-  text-decoration: none;
-}
-
+<style scoped lang="scss">
 .nav-link {
   text-transform: uppercase;
 }
@@ -45,6 +42,7 @@ a:hover {
   border-bottom: 2px solid var(--bs-success);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  width: 100%;
 }
 
 @media screen and (min-width: 768px) {

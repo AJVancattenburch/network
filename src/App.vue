@@ -1,28 +1,99 @@
 <template>
-  <header>
+
+  <header class="" container-fluid>
     <Navbar />
+    <Banner />
   </header>
   <main>
     <router-view />
   </main>
-   <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
-  </footer>
+  <!-- <div class="modal fade" id="create-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div> -->
+        <!-- <form @submit.prevent="createPost()">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="text" class="form-control" id="imgUrl" placeholder="insert image here" v-model="imgUrl">
+            </div>
+            <div class="form-group">
+              <label for="body">Body</label>
+              <textarea class="form-control" id="body" rows="3" v-model="body"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+          </form> -->
+      <!-- </div>
+    </div>
+  </div> -->
+
 </template>
 
 <script>
-import { computed } from 'vue'
-import { AppState } from './AppState'
-import Navbar from './components/Navbar.vue'
+
+import { computed, onMounted} from 'vue';
+import { AppState } from './AppState';
+import Banner from './Components/Banner.vue';
+import { adsService } from './services/AdsService';
+import { postsService } from './services/PostsService';
+import { logger } from './utils/Logger';
+import Pop from './utils/Pop';
 
 export default {
+  name: "App",
   setup() {
+    
+    async function getAds(){
+      try {
+        await adsService.getAds()
+      } catch (error) {
+        logger.error('Getting Ads', error)
+        Pop.error(error)
+      }
+    }
+
+    onMounted(() => {
+    getAds()
+    })
     return {
-      appState: computed(() => AppState)
+      // editable,
+      appState: computed(() => AppState),
+      ads: computed(() => AppState.ads),
+
+    //   async createPost() {
+    //     try {
+
+    //       const form = window.event.target
+    //       const newPost = {
+    //         body:
+    //           form.body.value,
+    //         imgUrl:
+    //           form.imgUrl.value,
+    //       }
+
+    //       await postsService.createPost(newPost)
+    //       Pop.success('Post Created!')
+    //       form.reset()
+
+    //     } catch ( error ) {
+    //       logger.error( '[Creating Post]', error )
+    //       Pop.toast( 'You must be logged in to create posts...', error )
+    //     }
+    //   }
     }
   },
-  components: { Navbar }
+
+  components: { Banner },
+
 }
+
 </script>
 <style lang="scss">
 @import "./assets/scss/main.scss";
@@ -30,6 +101,8 @@ export default {
 :root{
   --main-height: calc(100vh - 32px - 64px);
 }
+
+.nav
 
 
 footer {

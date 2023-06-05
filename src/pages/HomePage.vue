@@ -2,6 +2,8 @@
 
   <div class="container-fluid">
 
+    <createPost :profile="account" />
+    
     <section>
       <div class="row">
           <div class="col-10 blog-list  ms-5 text-dark" v-for="p in posts" :key="p.id">
@@ -58,8 +60,10 @@ export default {
     })
     return {
       posts: computed(() => AppState.posts),
+      account: computed(() => AppState.account),
 
     }
+
   }
 }
 

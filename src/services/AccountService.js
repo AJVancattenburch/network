@@ -16,7 +16,7 @@ class AccountService {
   async editAccount(formData) {
     const res = await api.put('/account', { ...formData })
     logger.log (res.data)
-    AppState.account = new Account(res.data)
+    AppState.account.unshift(new Account(res.data))
   }
 
 
@@ -25,7 +25,7 @@ class AccountService {
 
 
 
-  
+
 }
 
 export const accountService = new AccountService()

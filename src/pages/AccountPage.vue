@@ -1,19 +1,24 @@
 <template>
-  
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded-circle" style="max-height: 60px; aspect-ratio: 1/1; position: absolute; bottom: 5rem; right: 5rem; opacity: .9" :src="account.picture" alt="" />
-    <div class="container-fluid">
-      <AccountForm :profile="account"/>
+
+
+<div class="about text-center">
+  <h1>Welcome {{ account.name }}</h1>
+  <div class="container-fluid">
+  <AccountForm :profile="account"/>
+  <CreatePost :profile="account" />
+  </div>
+</div>
+
+
+    <div class="col-10 blog-list  ms-5 text-dark" v-for="p in posts" :key="p.creatorId">
+      <div class="text-center" v-if="p.creatorId == account.id">
+      <h3 class="text-center mb-5"></h3>
+      <PostCard :post="p" />
     </div>
   </div>
 
     <!-- NOTE this div will be the "Modal" button once form is functional and completed nested within Postform.vue -->
-    <div role="button">
-      <i class="mdi mdi-plus fw-6 text-white" style="font-size: 60px; text-shadow: 0 0 10px black; aspect-ratio: 1/1; position: absolute; bottom: 4rem; right: 5rem; filter: brightness(2);"></i>
-      <p class="fs-4" style="text-shadow: 0 0 3px black; opacity: .9; position: absolute; bottom: 1.5rem; right: 3.8rem;">Add post</p>
-      <p>{{ account.email }}</p>
-    </div>
+    
 
 </template>
 
@@ -23,24 +28,63 @@ import { computed } from 'vue'
 import { AppState } from '../AppState'
 import PostCard from '../components/PostCard.vue'
 import AccountForm from '../components/AccountForm.vue'
+import { postsService } from '../services/PostsService.js'
+import { logger } from '../utils/Logger.js'
+import Pop  from '../utils/Pop.js'
+import { onMounted } from 'vue'
+import CreatePost from '../components/CreatePost.vue'
 
 export default {
+  name: 'AccountPage',
+  components: {
+    PostCard,
+    AccountForm,
+    CreatePost
+  },
   setup() {
+    const account = computed(() => AppState.account)
+    const posts = computed(() => AppState.posts)
+    // const postsLength = computed(() => AppState.posts.length)
+
+    async function getPosts() {
+      try {
+        await postsService.getPosts()
+      } catch (error) {
+        logger.error(error)
+        Pop.toast('[GETTING ALL POSTS...]', error)
+      }
+    }
+
+    
+
+    onMounted(() => {
+      getPosts()
+
+    })
+
     return {
-      posts: computed(() => AppState.posts),
-      account: computed(() => AppState.account)
+      account,
+      posts,
+    }
+  },
+  methods: {
+    async deletePost(post) {
+      try {
+        await postsService.deletePost(post.id)
+        Pop.toast('[GOING POSTAL WITH THIS DELETING...]', 'success')
+      } catch (error) {
+        logger.error(error)
+        Pop.toast('[ERMERGERRRRD! A DURLEETERED PURST!...]', error)
+      }
     }
   }
+
 }
 
 </script>
 
 <style scoped lang="scss">
 
-i:hover {
-  transform: rotate(90deg);
-  transition: 1s;
-  filter: blur(1px);
-}
+
 
 </style>
