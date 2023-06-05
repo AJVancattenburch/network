@@ -3,34 +3,34 @@
 
       <div class="container mt-5">
         <div class="row">
-          <div class="col-8">
+          <div class="col-8 offset-2 elevation-5 p-5 bright-form">
 
             <form @submit.prevent="handleSubmit">
               <div class="card-body">
                 <div class="form-floating mb-3">
-                  <input name="name" class="form-control" placeholder="Name" type="text" required v-model="editable.name">
+                  <input name="name" class="form-control bg-grey" placeholder="Name" type="text" required v-model="editable.name">
                   <label for="name">Name:</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input name="picture" class="form-control" placeholder="Profile Picture" type="url" required
+                  <input name="picture" class="form-control bg-grey" placeholder="Profile Picture" type="url" required
                     v-model="editable.picture">
                   <label for="picture">Picture:</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input name="cover-img" class="form-control" placeholder="cover Image" type="url" required
+                  <input name="cover-img" class="form-control bg-grey" placeholder="cover Image" type="url" required
                     v-model="editable.coverImg">
                   <label for="cover-img">Cover Image:</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <textarea name="bio" class="form-control" placeholder="Edit Bio..." type="text" required v-model="editable.bio"></textarea>
+                  <textarea name="bio" class="form-control bg-grey" placeholder="Edit Bio..." type="text" required v-model="editable.bio"></textarea>
                   <label for="bio">About Me:</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input name="github" class="form-control" placeholder="Enter Link..." type="url"  v-model="editable.github">
+                  <input name="github" class="form-control bg-grey" placeholder="Enter Link..." type="url"  v-model="editable.github">
                   <label for="github">Github URL:</label>
                 </div>
                 <div class="form-floating mb-3">
-                  <input name="linkedin" class="form-control" placeholder="Enter Link..." type="url"  v-model="editable.linkedin">
+                  <input name="linkedin" class="form-control bg-grey" placeholder="Enter Link..." type="url"  v-model="editable.linkedin">
                   <label for="linkedin">Linkedin URL:</label>
                 </div>
               </div>
@@ -38,7 +38,7 @@
       
                 <!-- NOTE REMEMBER TO ADD ":on-change="@toggleChecked" TO THE CHECKBOX BELOW WHEN YOU NEED TO TOGGLE TRUE / FALSE FOR WHETHER OR NOT THE ACCOUNT HOLDER HAS GRADUATED FROM SCHOOL! -->
                 <input class="form-check-input" type="checkbox" id="">
-                <label class="form-check-label" for="flexCheckDefault">
+                <label class="form-check-label text-white" for="flexCheckDefault">
                   Graduated? If so, check the box on the left to verify.
                 </label>
               </div>
@@ -47,7 +47,7 @@
                 <input class="form-control" type="file" id="formFile">
               </div> -->
               <div class="card-footer text-end">
-                <button class="btn btn-success" type="submit" data-bs-dismiss="modal">Save Changes</button>
+                <button class="btn btn-success" type="submit">Save Changes</button>
               </div>
             </form>
             
@@ -98,11 +98,16 @@ import Pop from "../utils/Pop.js";
 <style scoped lang="scss">
 
 .account-form {
-  background-image: url('https://i1.sndcdn.com/artworks-000121554211-8emk1d-t500x500.jpg');
+  background-image: url('https://media.istockphoto.com/vectors/dark-blue-tech-neon-squares-background-vector-id672496066?k=6&m=672496066&s=170667a&w=0&h=GNqQGHDYA9fDA7LN6dn3_7zj_wrmOKO2cmAplKBnbP8=');
   background-size: cover;
   background-repeat: repeat;
   border-radius: .5rem;
   animation: animate 60s ease-in-out infinite;
+}
+
+.bright-form {
+  backdrop-filter: blur(5px) brightness(1.5);
+  border-radius: .5rem;
 }
 
 

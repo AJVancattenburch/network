@@ -1,7 +1,7 @@
 <template>
 
-  <div class="col-md-6 offset-3 my-5">
-    <div class="card mb-3 mt-5 post-card">
+  <div class="col-md-5 offset-4 my-5 ps-3">
+    <div class="card mb-3 mt-5 ms-4 post-card">
       <div class="row g-0" style="border: 3px solid dodgerblue; border-radius: .5rem;">
 
         <div class="col-md-4 rounded-start" style="height: 250px; aspect-ratio: 1/1; border-right: 3px solid dodgerblue;">
@@ -13,7 +13,7 @@
             {{ post?.creator.name }}
           </p>
           <div class="card-body post-body">
-            <p class="card-text me-5">{{ post?.body }}</p>
+            <p class="card-text me-5 scrollable">{{ post?.body }}</p>
             <div class="text-body-secondary text-end">
               <!-- <p class="card-text"><small class="text-muted">{{ post?.createdAt }}</small></p> -->
               <div class="text-center card-text text-white">
@@ -106,19 +106,6 @@ export default {
       
     }
   }
-    // onMounted() {
-      
-    // },
-      // async likePost(id) {
-      //   try {
-      //     await postsService.likePost(id)
-      //     AppState.activePost = id
-      //     Pop.toast("Post liked", 'success')
-      //   }
-      //   catch ( error ) {
-      //     Pop.toast( "Login to like this post", error )
-      //   }
-      // }
 
 </script>
 

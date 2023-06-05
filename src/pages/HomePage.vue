@@ -1,20 +1,36 @@
 <template>
 
-  <div class="container-fluid">
+  <div class="container-fluid bg-dark">
 
-    <createPost :profile="account" />
+    <section class="row justify-content-center pt-5">
+      <div class="col-8">
+        <ProfileSearchResult />
+      </div>
+    </section>
     
+    
+    
+    <createPost :profile="account" />
     <section>
-      <div class="row">
-          <div class="col-10 blog-list  ms-5 text-dark" v-for="p in posts" :key="p.id">
-            <h3 class="text-center mb-5"></h3>
-            <PostCard :post="p" />
-          </div>
+      <div class="d-flex">
+        <div class="p-4 ms-4 pe-1 text-center col-6 mt-5">
+          <button :disabled="!previousUrl" @click="changePage(previousUrl)" class="btn btn-light mt-5">Previous Page</button>
         </div>
-      </section>
+        <div class="p-4 ms-4 pe-1 text-center col-5 mt-5">
+          <button :disabled="!nextUrl" @click="changePage(nextUrl)" class="btn btn-light me-5 mt-5">Next Page</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-10 blog-list  ms-5 text-dark" v-for="(p, index) in posts" :key="index">
+          <h3 class="text-center mb-5"></h3>
+          <PostCard :post="p" />
+        </div>
+      </div>
 
-    </div>
-        
+    </section>
+
+    
+  </div>
 
         <!-- <div v-for="p in posts" :key="p.id">
 
@@ -42,9 +58,15 @@ import { postsService } from "../services/PostsService.js";
 import { logger } from "../utils/Logger.js";
 import Pop from "../utils/Pop.js";
 import { computed, onMounted } from "vue";
-
+import ProfileSearchResult from "../components/ProfileSearchResult.vue";
 
 export default {
+  components: {
+    // PostCard,
+    ProfileSearchResult,
+    // CreatePost
+  },
+  
   setup() {
     async function getPosts() {
       try {
@@ -61,6 +83,18 @@ export default {
     return {
       posts: computed(() => AppState.posts),
       account: computed(() => AppState.account),
+      nextUrl: computed(() => AppState.newer),
+      previousUrl: computed(() => AppState.older),
+
+
+      async changePage(url) {
+        try {
+          await postsService.changePage(url)
+        } catch (error) {
+          logger.error(error)
+          Pop.toast('[CHANGE PAGE ERROR]', error)
+        }
+      }
 
     }
 

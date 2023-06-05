@@ -6,10 +6,23 @@ import { api } from "./AxiosService.js"
 
 
 class PostsService {
+
+  async searchPosts(searchTerm){
+    const res = await api.get('api/posts', {
+        params: {
+            query: searchTerm,
+            
+        }
+    })
+    AppState.searchPosts = res.data.posts.map(p => new Post(p))
+  }
+
   async getPosts() {
     const res = await api.get('api/posts')
     AppState.posts = res.data.posts.map(p => new Post(p))
     logger.log(AppState.posts)
+    AppState.nextPageUrl = res.data.next
+    AppState.previousPageUrl = res.data.previous
   }
 
   async submitPost(formData){
@@ -42,22 +55,21 @@ class PostsService {
     // let post = AppState.posts.find(p => p.id == postId)
     const index = AppState.posts.findIndex(p => p.id == postId)
     AppState.posts.splice(index, 1, new Post(res.data))
-}
-
-//FIXME - this is not working. I think it's because I'm not passing the id correctly. Also tried to pass the whole post object, but that didn't work either.
-  async deletePost(postId) {
-      const res = await api.delete(`api/posts/${postId}`)
-      logger.log('[PLEASE WORK!]', res.data)
-      AppState.posts = AppState.posts.filter(p => p.id !== postId)
-
   }
-  
-  // delete function is not working
-  // async deletePost(id) {
-  //   const res = await api.delete('api/posts/:id', id)
-  //   logger.log(res.data)
-  //   AppState.posts = AppState.posts.filter(p => p.id !== id)
-  // }
+
+  async deletePost(postId) {
+    const res = await api.delete(`api/posts/${postId}`)
+    logger.log('[PLEASE WORK!]', res.data)
+    AppState.posts = AppState.posts.filter(p => p.id !== postId)
+  }
+
+  async changePage(url) {
+    const res = await api.get(url)
+    logger.log('res', res.data.posts)
+    AppState.posts = res.data.posts.map(p => new Post(p))
+    AppState.previousPageUrl = res.data.older
+    AppState.nextPageUrl = res.data.newer
+  }
   
   
 

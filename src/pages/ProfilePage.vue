@@ -19,7 +19,7 @@
                 <b class="card-title">LinkedIn: </b>
                 <div>
                   <a  style="color: blue;" :href="activeProfile.linkedin" v-if="activeProfile.linkedin ? activeProfile.linkedin : true">
-                  <i title="linkedin" name="linkedin" class="fs-2 mdi mdi-linkedin selectable"> {{ profile?.linkedin }} </i></a>
+                  <i title="linkedin" name="linkedin" class="fs-2 mdi mdi-linkedin selectable"> </i></a>
                 </div>
                 <b class="card-title">Github: </b>
                 <div>

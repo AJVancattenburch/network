@@ -1,11 +1,15 @@
 <template>
+
   <nav class="navbar navbar-expand-text-center lg navbar-dark bg-dark px-3 pb-5 me-5">
-    <router-link class="col-4 navbar-brand d-flex" :to="{ name: 'Home' }">
+    <router-link class="col-1 navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex align-items-center col-12 mx-5">
         <img alt="logo" src="https://i.ibb.co/4YnzxyH/Logo.png" height="45" />
       </div>
     </router-link>
-    <router-link :to="{ name: 'Account' }" role="button" class="col-4 text-success text-uppercase">
+    <router-link :to="{ name: 'Search' }" role="button" class="col-7 searchbar">
+      <ProfileSearchResult />
+    </router-link>
+    <router-link :to="{ name: 'Account' }" role="button" class="col-1 text-success text-uppercase">
       <i class="mdi mdi-account fs-3 mb-3"></i>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -15,23 +19,30 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <div class="navbar-nav">
         
+        <Login />
       </div>
       <!-- LOGIN COMPONENT HERE -->
       <div class="col-4"></div>
-      <Login />
     </div>
   </nav>
+
 </template>
 
+
 <script>
+
 import Login from './Login.vue';
+import ProfileSearchResult from './ProfileSearchResult.vue';
+
 export default {
   setup() {
     return {}
   },
-  components: { Login }
+  components: { Login, ProfileSearchResult }
 }
+
 </script>
+
 
 <style scoped lang="scss">
 .nav-link {

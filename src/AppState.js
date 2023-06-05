@@ -4,22 +4,35 @@ import { reactive } from 'vue'
 export const AppState = reactive({
   user: {},
   liked: false,
+  searchPosts: [],
+  pageData: {},
+  currentPage: 1,
+  currentProfilePage: 1,
+  totalProfilePages: 0,
+  totalPages: 0,
+  newerPage: null,
+  olderPage: null,
+  
+  searchParams: {
+    query: '',
+    page: 1
+  },
+  
   /** @type {import('./models/Account.js').Account} */
   account: {},
-
+  
   /** @type {import('./models/Profile.js').Profile | null} */
   activeProfile: null,
   linkedin: null,
+  
   /** @type {import('./models/Post.js').Post | null} */
   activePost: null,
-
+  
   /** @type {import('./models/Post.js').Post[]} */
   posts: [],
-
+  
   /** @type {import('./models/Post.js').Post[]} */
   profilePosts: [],
-  // nextPageUrl: [],
-  // previousPageUrl: [],
 
   /** @type {import('./models/Ad.js').Ad[]} */
   ads: []

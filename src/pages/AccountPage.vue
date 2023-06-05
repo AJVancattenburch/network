@@ -1,8 +1,8 @@
 <template>
 
 
-<div class="about text-center">
-  <h1>Welcome {{ account.name }}</h1>
+<div class="about text-center bg-account">
+  <h1 class="text-light pt-3">Welcome {{ account.name }}</h1>
   <div class="container-fluid">
   <AccountForm :profile="account"/>
   <CreatePost :profile="account" />
@@ -19,7 +19,6 @@
 
     <!-- NOTE this div will be the "Modal" button once form is functional and completed nested within Postform.vue -->
     
-
 </template>
 
 <script>
@@ -85,6 +84,12 @@ export default {
 
 <style scoped lang="scss">
 
-
+.bg-account {
+  background-image: url('https://media.istockphoto.com/vectors/dark-blue-tech-neon-squares-background-vector-id672496066?k=6&m=672496066&s=170667a&w=0&h=GNqQGHDYA9fDA7LN6dn3_7zj_wrmOKO2cmAplKBnbP8=');
+  background-size: cover;
+  background-repeat: repeat;
+  border-radius: .5rem;
+  padding-bottom: 20rem;
+}
 
 </style>
