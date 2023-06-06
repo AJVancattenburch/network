@@ -3,7 +3,7 @@
   <!-- <div v-if="profile.id == account.id">
     <router-link class="link active-link text-end fs-3" style="color: darkblue;" :to="{ name: 'Account' }">Edit Profile</router-link>
   </div> -->
-      <div class="card" v-if="profile">
+      <div class="card bg-dark" v-if="profile">
         <img class="img-fluid profile" style="opacity: .7;" :src="profile?.coverImg" :alt="profile?.name">
         <div class="d-flex flex-column align-items-end me-5 fs-4">
           <img class="profile-img rounded-circle img-fluid" :src="profile?.picture" style="opacity: .95; border: 5px solid gray;">
@@ -33,10 +33,18 @@
                   </a>
                 </div>
                 <div class="mt-3">
+                  <b class="card-title">Class:</b>
+                  <br>
+                  <span class="card-text" v-if="profile?.class ? profile?.class : '' "> {{ profile?.class }} </span>
+                  <!-- <span class="card-text" v-else> Student at Boise CodeWorks </span> -->
+                </div>
+                <div class="mt-3">
                   <b class="card-title">Attending School:</b>
                   <br>
-                  <span class="card-text" v-if="activeProfile.graduated = true ? 'Student at Boise CodeWorks' : 'Graduated with honors from Boise CodeWorks'"> {{ activeProfile.graduated }} </span>
+                  <span class="card-text" v-if="profile?.graduated == true"> Graduated with honors from Boise CodeWorks </span>
+                  <span class="card-text" v-else> Student at Boise CodeWorks </span>
                 </div>
+
                 <div class="mt-3">
                   <b class="card-title">Email:</b>
                   <p class="card-text">📩: {{ profile?.email }} </p>
@@ -66,10 +74,22 @@
             <em class="fs-5 fw-5 text-muted" style="text-shadow: 0 0 1px black;">{{ profile?.bio }}</em>
           </div>
         </div>
-        <div class="col-11 text-center fs-3 pt-5">
-          {{ profile?.name }}'s Recent Posts:
+
+
+        <div class="col-11 text-center fs-3 pt-5 mb-5">
+          <div class="mb-5">
+            <p class="pb-5 move-up">{{ profile?.name }}'s Recent Posts:</p>
+          </div>
         </div>
         <br><br>
+        <div class="d-flex">
+          <div class="p-4 ms-4 pe-1 text-center col-6 mt-5">
+            <button :disabled="!newerPage" @click="changePage(newerPage)" class="btn btn-light mt-5">Previous Page</button>
+          </div>
+          <div class="p-4 ms-4 pe-1 text-center col-5 mt-5">
+            <button :disabled="!olderPage" @click="changePage(olderPage)" class="btn btn-light me-5 mt-5">Next Page</button>
+          </div>
+        </div>
         <div class="col-11 offset-1 mt-3 post-list">
           <div class="col-10 ms-5 text-dark" v-for="p in posts" :key="p.id">
             <h3 class="text-center mb-5"></h3>
@@ -94,7 +114,7 @@
 <script>
 
 import { computed, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute  } from 'vue-router';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 import { profileService } from '../services/ProfileService.js';
@@ -104,6 +124,7 @@ import { logger } from "../utils/Logger.js";
    export default {
       setup(){
          const route = useRoute(); 
+
          async function getProfileById(){
             try {
                await profileService.getProfileById(route.params.id)
@@ -123,12 +144,26 @@ import { logger } from "../utils/Logger.js";
             getProfileById()
             getPostsByProfileId()
          })
+         
          return {
             profile: computed(() => AppState.activeProfile),
+            account: computed(() => AppState.account),
             posts: computed(() => AppState.posts),
+            olderPage: computed(() => AppState.olderPage),
+            newerPage: computed(() => AppState.newerPage),
             coverImg: computed(() => `url(${AppState.activeProfile?.coverImg})`),
             activeProfile: computed(() => AppState.activeProfile),
 
+            async changePage(url) {
+              try {
+                logger.log(url)
+                await postsService.changePage(url)
+
+              } catch (error) {
+                logger.error(error)
+                Pop.toast('[CHANGE PAGE ERROR]', error)
+              }
+            },
          }
   }
 }
@@ -168,6 +203,10 @@ import { logger } from "../utils/Logger.js";
     left: -5rem;
    }
 
+   .move-up {
+    margin-bottom: 5rem;
+   }
+
    .post-list {
     position: relative;
     top: -10rem;
@@ -175,11 +214,16 @@ import { logger } from "../utils/Logger.js";
     border-top: 3px solid dodgerblue;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, .5);
+    margin-top: 3rem;
+    padding-bottom: 1rem;
+    opacity: .7;
    }
 
     .selectable {
       cursor: pointer;
       user-select: none;
     }
+
+  
 
 </style>

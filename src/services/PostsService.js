@@ -14,15 +14,16 @@ class PostsService {
             
         }
     })
+    AppState.query = searchTerm
     AppState.searchPosts = res.data.posts.map(p => new Post(p))
   }
 
   async getPosts() {
     const res = await api.get('api/posts')
     AppState.posts = res.data.posts.map(p => new Post(p))
-    logger.log(AppState.posts)
-    AppState.nextPageUrl = res.data.next
-    AppState.previousPageUrl = res.data.previous
+    logger.log(AppState.posts, res.data)
+    AppState.olderPage = res.data.older
+    AppState.newerPage = res.data.newer
   }
 
   async submitPost(formData){
@@ -64,16 +65,25 @@ class PostsService {
   }
 
   async changePage(url) {
-    const res = await api.get(url)
-    logger.log('res', res.data.posts)
-    AppState.posts = res.data.posts.map(p => new Post(p))
-    AppState.previousPageUrl = res.data.older
-    AppState.nextPageUrl = res.data.newer
+    // const savedQuery = AppState.query
+
+    // if ( !savedQuery ) {
+      const res = await api.get(url)
+      AppState.posts = res.data.posts.map(p => new Post(p))
+      AppState.olderPage = res.data.older
+      AppState.newerPage = res.data.newer
   }
-  
+
+  // async changePage(url) {
+  //   const res = await api.get(url)
+  //   logger.log('res', res.data.posts)
+  //   AppState.posts = res.data.posts.map(p => new Post(p))
+  //   AppState.previousPageUrl = res.data.older
+  //   AppState.nextPageUrl = res.data.newer
+  // }
   
 
-
+  
 
 
 }

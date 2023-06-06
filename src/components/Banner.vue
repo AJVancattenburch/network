@@ -24,7 +24,7 @@ return {
 <style>
 
 .banner {
-  width: 93.6%;
+  width: 100%;
 }
 
 </style>

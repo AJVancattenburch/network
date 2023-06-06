@@ -1,15 +1,15 @@
 <template>
 
   <div class="col-md-5 offset-4 my-5 ps-3">
-    <div class="card mb-3 mt-5 ms-4 post-card">
+    <div class="card mb-3 mt-5 ms-4 post-card post-list">
       <div class="row g-0" style="border: 3px solid dodgerblue; border-radius: .5rem;">
 
         <div class="col-md-4 rounded-start" style="height: 250px; aspect-ratio: 1/1; border-right: 3px solid dodgerblue;">
           <img style="height: 250px; width: 270px;" :src="post?.imgUrl" class="img-fluid rounded-start post-img" alt="No image attached">
         </div>
         
-        <div class="col-md-8" style="height: 250px; aspect-ratio: 1/1;">
-          <p class="mt-2 mb-2">
+        <div class="col-md-8 post-card" style="height: 250px; aspect-ratio: 1/1;">
+          <p class="mt-2 mb-2 ms-3">
             {{ post?.creator.name }}
           </p>
           <div class="card-body post-body">
@@ -163,5 +163,12 @@ div.post-card>img {
   filter: brightness(1.2);
   transition: .5s;
 }
+
+.post-list:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  filter: brightness(1.2);
+  transition: .5s;
+ }
 
 </style>

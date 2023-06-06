@@ -12,17 +12,14 @@ export const AppState = reactive({
   totalPages: 0,
   newerPage: null,
   olderPage: null,
-  
-  searchParams: {
-    query: '',
-    page: 1
-  },
+  query: null,
+  activeProfile: null,
+
   
   /** @type {import('./models/Account.js').Account} */
   account: {},
   
   /** @type {import('./models/Profile.js').Profile | null} */
-  activeProfile: null,
   linkedin: null,
   
   /** @type {import('./models/Post.js').Post | null} */

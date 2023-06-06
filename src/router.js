@@ -33,7 +33,7 @@ const routes = [
      component: loadPage('HomePage')
    },
   {
-    path: '/search',
+    path: '/posts/search',
     name: 'Search',
     component: loadPage('SearchPage')
   }

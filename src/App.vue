@@ -7,6 +7,7 @@
   <main>
     <router-view />
   </main>
+
   <!-- <div class="modal fade" id="create-post" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -40,9 +41,9 @@
 
 import { computed, onMounted} from 'vue';
 import { AppState } from './AppState';
-import Banner from './Components/Banner.vue';
+import Banner from './components/Banner.vue';
 import { adsService } from './services/AdsService';
-import { postsService } from './services/PostsService';
+// import { postsService } from './services/PostsService';
 import { logger } from './utils/Logger';
 import Pop from './utils/Pop';
 
@@ -50,7 +51,7 @@ export default {
   name: "App",
   setup() {
     
-    async function getAds(){
+    async function getAds() {
       try {
         await adsService.getAds()
       } catch (error) {
@@ -66,27 +67,6 @@ export default {
       // editable,
       appState: computed(() => AppState),
       ads: computed(() => AppState.ads),
-
-    //   async createPost() {
-    //     try {
-
-    //       const form = window.event.target
-    //       const newPost = {
-    //         body:
-    //           form.body.value,
-    //         imgUrl:
-    //           form.imgUrl.value,
-    //       }
-
-    //       await postsService.createPost(newPost)
-    //       Pop.success('Post Created!')
-    //       form.reset()
-
-    //     } catch ( error ) {
-    //       logger.error( '[Creating Post]', error )
-    //       Pop.toast( 'You must be logged in to create posts...', error )
-    //     }
-    //   }
     }
   },
 
@@ -95,6 +75,7 @@ export default {
 }
 
 </script>
+
 <style lang="scss">
 @import "./assets/scss/main.scss";
 
@@ -102,12 +83,10 @@ export default {
   --main-height: calc(100vh - 32px - 64px);
 }
 
-.nav
-
-
 footer {
   display: grid;
   place-content: center;
   height: 32px;
 }
+
 </style>

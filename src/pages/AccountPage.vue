@@ -10,7 +10,15 @@
 </div>
 
 
-    <div class="col-10 blog-list  ms-5 text-dark" v-for="p in posts" :key="p.creatorId">
+  <div class="d-flex">
+    <div class="p-4 ms-4 pe-1 text-center col-6 mt-5">
+      <button :disabled="!newerPage" @click="changePage(newerPage)" class="btn btn-light mt-5">Previous Page</button>
+    </div>
+    <div class="p-4 ms-4 pe-1 text-center col-5 mt-5">
+      <button :disabled="!olderPage" @click="changePage(olderPage)" class="btn btn-light me-5 mt-5">Next Page</button>
+    </div>
+  </div>
+    <div class="col-10 ms-5 text-dark" v-for="p in posts" :key="p.id">
       <div class="text-center" v-if="p.creatorId == account.id">
       <h3 class="text-center mb-5"></h3>
       <PostCard :post="p" />
@@ -38,13 +46,12 @@ export default {
   components: {
     PostCard,
     AccountForm,
-    CreatePost
+    CreatePost,
+    
   },
   setup() {
-    const account = computed(() => AppState.account)
-    const posts = computed(() => AppState.posts)
     // const postsLength = computed(() => AppState.posts.length)
-
+    
     async function getPosts() {
       try {
         await postsService.getPosts()
@@ -62,8 +69,10 @@ export default {
     })
 
     return {
-      account,
-      posts,
+      account: computed(() => AppState.account),
+      posts: computed(() => AppState.posts),
+      olderPage: computed(() => AppState.olderPage),
+      newerPage: computed(() => AppState.newerPage),
     }
   },
   methods: {
@@ -75,7 +84,18 @@ export default {
         logger.error(error)
         Pop.toast('[ERMERGERRRRD! A DURLEETERED PURST!...]', error)
       }
-    }
+    },
+
+    async changePage(url) {
+        try {
+          logger.log(url)
+          await postsService.changePage(url)
+
+        } catch (error) {
+          logger.error(error)
+          Pop.toast('[CHANGE PAGE ERROR]', error)
+        }
+      }
   }
 
 }
@@ -88,8 +108,13 @@ export default {
   background-image: url('https://media.istockphoto.com/vectors/dark-blue-tech-neon-squares-background-vector-id672496066?k=6&m=672496066&s=170667a&w=0&h=GNqQGHDYA9fDA7LN6dn3_7zj_wrmOKO2cmAplKBnbP8=');
   background-size: cover;
   background-repeat: repeat;
-  border-radius: .5rem;
   padding-bottom: 20rem;
+}
+
+main {
+  background-image: url('https://media.istockphoto.com/vectors/dark-blue-tech-neon-squares-background-vector-id672496066?k=6&m=672496066&s=170667a&w=0&h=GNqQGHDYA9fDA7LN6dn3_7zj_wrmOKO2cmAplKBnbP8=');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 </style>
